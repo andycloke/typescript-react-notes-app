@@ -15,14 +15,17 @@ interface IProps {
 const TEXT_AREA_ROWS = 4;
 
 const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps) => {
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
   const [textValue, setTextValue] = useState(initialValues.text);
   const [published, setPublished] = useState(initialValues.status === NoteStatus.PUBLISHED);
 
   const handleSaveClick = async () => {
+    setSaveButtonDisabled(true);
     await onSaveClick({
       text: textValue,
       status: published ? NoteStatus.PUBLISHED : NoteStatus.DRAFT
     });
+    setSaveButtonDisabled(false);
     setTextValue('');
     setPublished(false);
   };
@@ -33,7 +36,13 @@ const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps
   const handlePublishedClick = () => setPublished(published => !published);
 
   return (
-    <Modal visible={isOpen} okText="Save" onOk={handleSaveClick} onCancel={onCancelClick}>
+    <Modal
+      visible={isOpen}
+      okText="Save"
+      onOk={handleSaveClick}
+      onCancel={onCancelClick}
+      okButtonProps={{ disabled: saveButtonDisabled }}
+    >
       <Input.TextArea
         autoFocus
         rows={TEXT_AREA_ROWS}
