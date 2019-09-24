@@ -1,38 +1,32 @@
-import React from 'react';
-import { List, PageHeader } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { PageHeader } from 'antd';
 import styled from 'styled-components';
-
-const data = [
-  {
-    title: 'Ant Design Title 1'
-  },
-  {
-    title: 'Ant Design Title 2'
-  },
-  {
-    title: 'Ant Design Title 3'
-  },
-  {
-    title: 'Ant Design Title 4'
-  }
-];
+import NotesList from './components/NotesList';
+import NotesService from './service';
+import { Note } from './types';
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    const getNotes = async () => {
+      setIsLoading(true);
+      const notes = await NotesService.getNotes();
+      setNotes(notes);
+      setIsLoading(false);
+    };
+  }, []);
+
   return (
     <>
       <SMainDiv>
         <PageHeader title="Notes" />
-        <List
-          itemLayout="horizontal"
-          dataSource={data}
-          renderItem={item => (
-            <List.Item>
-              <List.Item.Meta
-                title={item.title}
-                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-              />
-            </List.Item>
-          )}
+        <NotesList
+          notes={notes}
+          onItemClick={() => console.log('test')}
+          isLoading={isLoading}
+          onAddClick={() => console.log('add')}
         />
       </SMainDiv>
     </>
