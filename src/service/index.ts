@@ -42,7 +42,7 @@ class NoteService {
         ...body
       };
       this.notes = this.notes.map(note => (note.id === id ? updatedNote : note));
-      return existingNote;
+      return updatedNote;
     } else {
       throw new Error(`Note with id: ${id} 'does not exist`);
     }

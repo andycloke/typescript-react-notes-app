@@ -6,10 +6,17 @@ interface IProps {
   notes: Note[];
   isLoading: boolean;
   onAddClick: () => void;
-  onItemClick: (id: string) => void;
+  onEditItemClick: (id: string) => void;
+  onDeleteItemClick: (id: string) => void;
 }
 
-const NotesList = ({ notes, isLoading, onAddClick, onItemClick }: IProps) => {
+const NotesList = ({
+  notes,
+  isLoading,
+  onAddClick,
+  onEditItemClick,
+  onDeleteItemClick
+}: IProps) => {
   return (
     <List
       bordered
@@ -27,7 +34,12 @@ const NotesList = ({ notes, isLoading, onAddClick, onItemClick }: IProps) => {
       itemLayout="horizontal"
       dataSource={notes}
       renderItem={note => (
-        <List.Item onClick={() => onItemClick(note.id)}>
+        <List.Item
+          actions={[
+            <a onClick={() => onEditItemClick(note.id)}>edit</a>,
+            <a onClick={() => onDeleteItemClick(note.id)}>delete</a>
+          ]}
+        >
           <List.Item.Meta
             title={note.text}
             description={note.status === NoteStatus.PUBLISHED ? 'Published' : 'Draft'}

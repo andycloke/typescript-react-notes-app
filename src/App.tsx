@@ -24,19 +24,24 @@ const App = () => {
 
   const handleAddModalSaveClick = async (values: FormValues) => {
     const newNote = await NotesService.postNote(values);
-    setNotes(notes => Array.from(new Set([...notes, newNote])));
+    setNotes(notes => [...notes, newNote]);
     setAddModalIsShowing(false);
   };
 
   const handleEditModalSaveClick = async (values: FormValues) => {
     if (editModalNoteId) {
       const updatedNote = await NotesService.patchNote(editModalNoteId, values);
-      setNotes(notes => Array.from(new Set([...notes, updatedNote])));
+      setNotes(notes => notes.map(note => (note.id === updatedNote.id ? updatedNote : note)));
       setEditModalNoteId(null);
     }
   };
 
   const handleAddNoteClick = () => setAddModalIsShowing(true);
+
+  const handleDeleteNoteClick = async (id: string) => {
+    await NotesService.deleteNote(id);
+    setNotes(notes => notes.filter(note => note.id !== id));
+  };
 
   const editModalNote = notes.find(note => note.id === editModalNoteId);
 
@@ -53,7 +58,8 @@ const App = () => {
       <SListDiv>
         <NotesList
           notes={notes}
-          onItemClick={setEditModalNoteId}
+          onEditItemClick={setEditModalNoteId}
+          onDeleteItemClick={handleDeleteNoteClick}
           isLoading={isLoading}
           onAddClick={handleAddNoteClick}
         />
