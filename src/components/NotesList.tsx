@@ -17,20 +17,22 @@ const NotesList = ({
   onEditItemClick,
   onDeleteItemClick
 }: IProps) => {
+  const locale = {
+    emptyText: (
+      <>
+        <Typography.Paragraph>You don't have any notes yet</Typography.Paragraph>
+        <Button type="primary" onClick={onAddClick}>
+          Add your first note
+        </Button>
+      </>
+    )
+  };
+
   return (
     <List
       bordered
       loading={isLoading}
-      locale={{
-        emptyText: (
-          <>
-            <Typography.Paragraph>You don't have any notes yet</Typography.Paragraph>
-            <Button type="primary" onClick={onAddClick}>
-              Add your first note
-            </Button>
-          </>
-        )
-      }}
+      locale={locale}
       itemLayout="horizontal"
       dataSource={notes}
       renderItem={note => (

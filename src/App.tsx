@@ -28,6 +28,8 @@ const App = () => {
     setAddModalIsShowing(false);
   };
 
+  const hanldeAddModalCloseClick = () => setAddModalIsShowing(false);
+
   const handleEditModalSaveClick = async (values: FormValues) => {
     if (editModalNoteId) {
       const updatedNote = await NotesService.patchNote(editModalNoteId, values);
@@ -35,6 +37,8 @@ const App = () => {
       setEditModalNoteId(null);
     }
   };
+
+  const hanldeEditModalCloseClick = () => setEditModalNoteId(null);
 
   const handleAddNoteClick = () => setAddModalIsShowing(true);
 
@@ -66,14 +70,14 @@ const App = () => {
         <NoteModal
           isOpen={addModalIsShowing}
           onSaveClick={handleAddModalSaveClick}
-          onCancelClick={() => setAddModalIsShowing(false)}
+          onCancelClick={hanldeAddModalCloseClick}
           initialValues={{ text: '', status: NoteStatus.DRAFT }}
         />
         {editModalNote && (
           <NoteModal
             isOpen={!!editModalNoteId}
             onSaveClick={handleEditModalSaveClick}
-            onCancelClick={() => setEditModalNoteId(null)}
+            onCancelClick={hanldeEditModalCloseClick}
             initialValues={editModalNote}
           />
         )}

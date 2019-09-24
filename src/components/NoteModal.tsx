@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, EventHandler, ChangeEvent } from 'react';
 import { Modal, Input, Checkbox } from 'antd';
 import { Note, NoteStatus } from '../types';
 import styled from 'styled-components';
@@ -27,15 +27,20 @@ const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps
     setPublished(false);
   };
 
+  const handleTextAreaChange: EventHandler<ChangeEvent<{ value: string }>> = e =>
+    setTextValue(e.target.value);
+
+  const handlePublishedClick = () => setPublished(published => !published);
+
   return (
     <Modal visible={isOpen} okText="Save" onOk={handleSaveClick} onCancel={onCancelClick}>
       <Input.TextArea
         autoFocus
         rows={TEXT_AREA_ROWS}
         value={textValue}
-        onChange={e => setTextValue(e.target.value)}
+        onChange={handleTextAreaChange}
       ></Input.TextArea>
-      <SCheckbox checked={published} onChange={() => setPublished(published => !published)}>
+      <SCheckbox checked={published} onChange={handlePublishedClick}>
         Published
       </SCheckbox>
     </Modal>
