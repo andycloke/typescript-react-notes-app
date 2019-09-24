@@ -1,7 +1,29 @@
-import { Note, NotePostRequest, NotePatchRequest, NoteResponse, NotesResponse } from '../types';
+import { Note } from '../types';
 
 const timeout = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const timeout1s = () => timeout(500);
+
+export enum NoteStatus {
+  DRAFT = 'draft',
+  PUBLISHED = 'published'
+}
+
+export type NotePostRequest = {
+  text: string;
+  status: NoteStatus;
+};
+
+export type NoteResponse = {
+  id: string;
+  text: string;
+  status: NoteStatus;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type NotesResponse = NoteResponse[];
+
+export type NotePatchRequest = Partial<NotePostRequest>;
 
 class NoteService {
   notes: Note[] = [];

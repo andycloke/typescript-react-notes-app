@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { PageHeader, Button } from 'antd';
 import styled from 'styled-components';
 import NotesList from './components/NotesList';
-import NotesService from './service';
-import { Note, NoteStatus } from './types';
+import NotesService, { NoteStatus } from './service';
+import { Note } from './types';
 import NoteModal, { FormValues } from './components/NoteModal';
 
 const EMPTY_NOTE_VALUES = { text: '', status: NoteStatus.DRAFT };
@@ -32,7 +32,7 @@ const App = () => {
     setAddModalIsShowing(false);
   };
 
-  const hanldeAddModalCloseClick = () => setAddModalIsShowing(false);
+  const handleAddModalCloseClick = () => setAddModalIsShowing(false);
 
   const handleEditModalSaveClick = async (values: FormValues) => {
     if (editModalNoteId) {
@@ -76,7 +76,7 @@ const App = () => {
         <NoteModal
           isOpen={addModalIsShowing}
           onSaveClick={handleAddModalSaveClick}
-          onCancelClick={hanldeAddModalCloseClick}
+          onCancelClick={handleAddModalCloseClick}
           initialValues={EMPTY_NOTE_VALUES}
         />
         <NoteModal
