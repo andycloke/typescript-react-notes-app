@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Button, Typography } from 'antd';
-import { Note } from '../types';
+import { Note, NoteStatus } from '../types';
 
 interface IProps {
   notes: Note[];
@@ -28,7 +28,10 @@ const NotesList = ({ notes, isLoading, onAddClick, onItemClick }: IProps) => {
       dataSource={notes}
       renderItem={note => (
         <List.Item onClick={() => onItemClick(note.id)}>
-          <List.Item.Meta title={note.text} />
+          <List.Item.Meta
+            title={note.text}
+            description={note.status === NoteStatus.PUBLISHED ? 'Published' : 'Draft'}
+          />
         </List.Item>
       )}
     />

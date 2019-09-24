@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Input } from 'antd';
+import { Modal, Input, Checkbox } from 'antd';
 import { Note, NoteStatus } from '../types';
 
 export type FormValues = Pick<Note, 'text' | 'status'>;
@@ -15,10 +15,15 @@ const TEXT_AREA_ROWS = 4;
 
 const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps) => {
   const [textValue, setTextValue] = useState(initialValues.text);
+  const [published, setPublished] = useState(initialValues.status === NoteStatus.PUBLISHED);
 
   const handleSaveClick = async () => {
-    await onSaveClick({ text: textValue, status: NoteStatus.DRAFT });
+    await onSaveClick({
+      text: textValue,
+      status: published ? NoteStatus.PUBLISHED : NoteStatus.DRAFT
+    });
     setTextValue('');
+    setPublished(false);
   };
 
   return (
@@ -29,6 +34,9 @@ const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps
         value={textValue}
         onChange={e => setTextValue(e.target.value)}
       ></Input.TextArea>
+      <Checkbox checked={published} onChange={() => setPublished(published => !published)}>
+        Published
+      </Checkbox>
     </Modal>
   );
 };
