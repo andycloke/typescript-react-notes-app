@@ -6,6 +6,8 @@ import NotesService from './service';
 import { Note, NoteStatus } from './types';
 import NoteModal, { FormValues } from './components/NoteModal';
 
+const EMPTY_NOTE_VALUES = { text: '', status: NoteStatus.DRAFT };
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [addModalIsShowing, setAddModalIsShowing] = useState(false);
@@ -21,6 +23,8 @@ const App = () => {
     };
     getNotes();
   }, []);
+
+  const handleAddNoteClick = () => setAddModalIsShowing(true);
 
   const handleAddModalSaveClick = async (values: FormValues) => {
     const newNote = await NotesService.postNote(values);
@@ -38,9 +42,11 @@ const App = () => {
     }
   };
 
-  const hanldeEditModalCloseClick = () => setEditModalNoteId(null);
+  const handleEditModalCloseClick = () => setEditModalNoteId(null);
 
-  const handleAddNoteClick = () => setAddModalIsShowing(true);
+  const handleEditNoteClick = async (id: string) => {
+    setEditModalNoteId(id);
+  };
 
   const handleDeleteNoteClick = async (id: string) => {
     await NotesService.deleteNote(id);
@@ -62,7 +68,7 @@ const App = () => {
       <SListDiv>
         <NotesList
           notes={notes}
-          onEditItemClick={setEditModalNoteId}
+          onEditItemClick={handleEditNoteClick}
           onDeleteItemClick={handleDeleteNoteClick}
           isLoading={isLoading}
           onAddClick={handleAddNoteClick}
@@ -71,16 +77,14 @@ const App = () => {
           isOpen={addModalIsShowing}
           onSaveClick={handleAddModalSaveClick}
           onCancelClick={hanldeAddModalCloseClick}
-          initialValues={{ text: '', status: NoteStatus.DRAFT }}
+          initialValues={EMPTY_NOTE_VALUES}
         />
-        {editModalNote && (
-          <NoteModal
-            isOpen={!!editModalNoteId}
-            onSaveClick={handleEditModalSaveClick}
-            onCancelClick={hanldeEditModalCloseClick}
-            initialValues={editModalNote}
-          />
-        )}
+        <NoteModal
+          isOpen={!!editModalNoteId}
+          onSaveClick={handleEditModalSaveClick}
+          onCancelClick={handleEditModalCloseClick}
+          initialValues={editModalNote ? editModalNote : EMPTY_NOTE_VALUES}
+        />
       </SListDiv>
     </SOuterDiv>
   );

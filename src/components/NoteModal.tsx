@@ -1,4 +1,4 @@
-import React, { useState, EventHandler, ChangeEvent } from 'react';
+import React, { useState, EventHandler, ChangeEvent, useEffect } from 'react';
 import { Modal, Input, Checkbox } from 'antd';
 import { Note, NoteStatus } from '../types';
 import styled from 'styled-components';
@@ -18,6 +18,13 @@ const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps
   const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
   const [textValue, setTextValue] = useState(initialValues.text);
   const [published, setPublished] = useState(initialValues.status === NoteStatus.PUBLISHED);
+
+  useEffect(() => {
+    if (initialValues.text) {
+      setTextValue(initialValues.text);
+    }
+    setPublished(initialValues.status === NoteStatus.PUBLISHED);
+  }, [initialValues]);
 
   const handleSaveClick = async () => {
     setSaveButtonDisabled(true);
