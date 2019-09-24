@@ -12,6 +12,7 @@ interface IProps {
 const NotesList = ({ notes, isLoading, onAddClick, onItemClick }: IProps) => {
   return (
     <List
+      bordered
       loading={isLoading}
       locale={{
         emptyText: (

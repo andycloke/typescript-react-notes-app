@@ -1,7 +1,7 @@
 import { Note, NotePostRequest, NotePatchRequest, NoteResponse, NotesResponse } from '../types';
 
 const timeout = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-const timeout1s = () => timeout(1000);
+const timeout1s = () => timeout(500);
 
 class NoteService {
   notes: Note[] = [];
