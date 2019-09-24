@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Input, Checkbox } from 'antd';
 import { Note, NoteStatus } from '../types';
+import styled from 'styled-components';
 
 export type FormValues = Pick<Note, 'text' | 'status'>;
 
@@ -34,11 +35,15 @@ const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps
         value={textValue}
         onChange={e => setTextValue(e.target.value)}
       ></Input.TextArea>
-      <Checkbox checked={published} onChange={() => setPublished(published => !published)}>
+      <SCheckbox checked={published} onChange={() => setPublished(published => !published)}>
         Published
-      </Checkbox>
+      </SCheckbox>
     </Modal>
   );
 };
+
+const SCheckbox = styled(Checkbox)`
+  margin-top: 20px;
+`;
 
 export default NoteModal;
