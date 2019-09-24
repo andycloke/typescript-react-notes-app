@@ -59,13 +59,13 @@ const App = () => {
 };
 
 export const SOuterDiv = styled.div`
-  max-width: 1000px;
+  max-width: 1050px;
   width: 90%;
   margin: 0 auto;
 `;
 
 export const SListDiv = styled.div`
-  max-width: 700px;
+  max-width: 600px;
   width: 100%;
   margin: 0 auto;
 `;
