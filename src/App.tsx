@@ -16,6 +16,7 @@ const App = () => {
       setNotes(notes);
       setIsLoading(false);
     };
+    getNotes();
   }, []);
 
   return (
