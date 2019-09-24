@@ -9,16 +9,16 @@ import NoteModal, { FormValues } from './components/NoteModal';
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [addModalIsShowing, setAddModalIsShowing] = useState(false);
+  const [editModalNoteId, setEditModalNoteId] = useState<string | null>(null);
   const [notes, setNotes] = useState<Note[]>([]);
 
-  const getNotes = async () => {
-    setIsLoading(true);
-    const notes = await NotesService.getNotes();
-    setNotes(notes);
-    setIsLoading(false);
-  };
-
   useEffect(() => {
+    const getNotes = async () => {
+      setIsLoading(true);
+      const notes = await NotesService.getNotes();
+      setNotes(notes);
+      setIsLoading(false);
+    };
     getNotes();
   }, []);
 
@@ -28,7 +28,17 @@ const App = () => {
     setAddModalIsShowing(false);
   };
 
+  const handleEditModalSaveClick = async (values: FormValues) => {
+    if (editModalNoteId) {
+      const updatedNote = await NotesService.patchNote(editModalNoteId, values);
+      setNotes(notes => Array.from(new Set([...notes, updatedNote])));
+      setEditModalNoteId(null);
+    }
+  };
+
   const handleAddNoteClick = () => setAddModalIsShowing(true);
+
+  const editModalNote = notes.find(note => note.id === editModalNoteId);
 
   return (
     <SOuterDiv>
@@ -43,7 +53,7 @@ const App = () => {
       <SListDiv>
         <NotesList
           notes={notes}
-          onItemClick={() => console.log('test')}
+          onItemClick={setEditModalNoteId}
           isLoading={isLoading}
           onAddClick={handleAddNoteClick}
         />
@@ -53,6 +63,14 @@ const App = () => {
           onCancelClick={() => setAddModalIsShowing(false)}
           initialValues={{ text: '', status: NoteStatus.DRAFT }}
         />
+        {editModalNote && (
+          <NoteModal
+            isOpen={!!editModalNoteId}
+            onSaveClick={handleEditModalSaveClick}
+            onCancelClick={() => setEditModalNoteId(null)}
+            initialValues={editModalNote}
+          />
+        )}
       </SListDiv>
     </SOuterDiv>
   );
