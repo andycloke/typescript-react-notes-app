@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { List } from 'antd';
+
+const data = [
+  {
+    title: 'Ant Design Title 1'
+  },
+  {
+    title: 'Ant Design Title 2'
+  },
+  {
+    title: 'Ant Design Title 3'
+  },
+  {
+    title: 'Ant Design Title 4'
+  }
+];
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <List
+      itemLayout="horizontal"
+      dataSource={data}
+      renderItem={item => (
+        <List.Item>
+          <List.Item.Meta
+            title={item.title}
+            description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+          />
+        </List.Item>
+      )}
+    />
   );
-}
+};
 
 export default App;
