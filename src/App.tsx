@@ -6,7 +6,7 @@ import NotesService from './service';
 import { Note, NoteStatus } from './types';
 import NoteModal, { FormValues } from './components/NoteModal';
 
-const EMPTY_NOTE_VALUES = { text: '', status: NoteStatus.DRAFT };
+const EMPTY_NOTE_VALUES: FormValues = { text: '', status: NoteStatus.DRAFT };
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
