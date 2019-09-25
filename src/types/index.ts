@@ -1,11 +1,5 @@
-import { NoteStatus } from './backend';
+import { NoteResponse } from './backend';
 
-export type Note = {
-  id: string;
-  text: string;
-  status: NoteStatus;
-  createdAt: string;
-  updatedAt: string;
-};
+export type Note = NoteResponse;
 
 export * from './backend';
