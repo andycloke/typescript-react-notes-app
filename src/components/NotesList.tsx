@@ -35,6 +35,7 @@ const NotesList = ({
       locale={locale}
       itemLayout="horizontal"
       dataSource={notes}
+      rowKey={note => note.id}
       renderItem={note => (
         <List.Item
           actions={[
