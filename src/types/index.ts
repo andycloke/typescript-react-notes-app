@@ -1,4 +1,4 @@
-import { NoteStatus } from '../service';
+import { NoteStatus } from './backend';
 
 export type Note = {
   id: string;
@@ -7,3 +7,5 @@ export type Note = {
   createdAt: string;
   updatedAt: string;
 };
+
+export * from './backend';
