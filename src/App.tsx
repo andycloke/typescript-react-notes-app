@@ -5,6 +5,7 @@ import NotesList from './components/NotesList';
 import NotesService from './service';
 import { Note, NoteStatus } from './types';
 import NoteModal, { FormValues } from './components/NoteModal';
+import { uniqBy } from 'lodash';
 
 const EMPTY_NOTE_VALUES: FormValues = { text: '', status: NoteStatus.DRAFT };
 
@@ -32,7 +33,8 @@ const App = () => {
 
   const handleAddModalSaveClick = async (values: FormValues) => {
     const newNote = await NotesService.postNote(values);
-    setNotes(notes => [...notes, newNote]);
+    // had some issues with duplicate items added, `uniqBy` used to remedy
+    setNotes(notes => uniqBy([...notes, newNote], note => note.id));
     setAddModalIsShowing(false);
   };
 
