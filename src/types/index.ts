@@ -1,5 +1,5 @@
-import { NoteResponse } from './backend';
+import { NoteResponse } from './contracts';
 
 export type Note = NoteResponse;
 
-export * from './backend';
+export * from './contracts';
