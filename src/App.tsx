@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { PageHeader, Button } from 'antd';
 import styled from 'styled-components';
 import NotesList from './components/NotesList';
-import NotesService, { NoteStatus } from './service';
-import { Note } from './types';
+import NotesService from './service';
+import { Note, NoteStatus } from './types';
 import NoteModal, { FormValues } from './components/NoteModal';
 
 const EMPTY_NOTE_VALUES = { text: '', status: NoteStatus.DRAFT };
