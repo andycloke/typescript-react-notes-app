@@ -20,6 +20,8 @@ const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps
   const [published, setPublished] = useState(initialValues.status === NoteStatus.PUBLISHED);
 
   useEffect(() => {
+    /* potentially a bit of an anti pattern - initiaaly setting, then updating state of props, 
+    but not unheard of, e.g. Formik's `enableReinitialize props allows you to do this */
     if (initialValues.text) {
       setTextValue(initialValues.text);
     }
@@ -32,6 +34,10 @@ const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps
       text: textValue,
       status: published ? NoteStatus.PUBLISHED : NoteStatus.DRAFT
     });
+    resetState();
+  };
+
+  const resetState = () => {
     setSaveButtonDisabled(false);
     setTextValue('');
     setPublished(false);
