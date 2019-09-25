@@ -54,24 +54,29 @@ const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps
 
   return (
     <Modal
+      destroyOnClose={true}
       visible={isOpen}
       okText="Save"
       onOk={handleSaveClick}
       onCancel={onCancelClick}
       okButtonProps={{ disabled: saveButtonDisabled }}
     >
-      <Input.TextArea
+      <STextArea
         autoFocus
         rows={TEXT_AREA_ROWS}
         value={textValue}
         onChange={handleTextAreaChange}
-      ></Input.TextArea>
+      ></STextArea>
       <SCheckbox checked={published} onChange={handlePublishedClick}>
         Published
       </SCheckbox>
     </Modal>
   );
 };
+
+const STextArea = styled(Input.TextArea)`
+  margin-top: 20px;
+`;
 
 const SCheckbox = styled(Checkbox)`
   margin-top: 20px;
