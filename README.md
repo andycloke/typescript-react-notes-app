@@ -2,7 +2,7 @@ Simple Note Taking App used to demo Typescript
 
 ![Demo gif](https://media.giphy.com/media/JrSJmKFXldvft64p1k/giphy.gif)
 
-This project assumes you are running the backend on PORT 4000. To do so:
+This project assumes you are running the backend on port 4000. To do so:
 Clone [this project](https://github.com/bannastre/ts_notes). Run it using the steps in its README.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
