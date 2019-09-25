@@ -17,9 +17,13 @@ const App = () => {
   useEffect(() => {
     const getNotes = async () => {
       setIsLoading(true);
-      const notes = await NotesService.getNotes();
-      setNotes(notes);
-      setIsLoading(false);
+      try {
+        const notes = await NotesService.getNotes();
+        setNotes(notes);
+        setIsLoading(false);
+      } catch (error) {
+        console.log('error: ', error);
+      }
     };
     getNotes();
   }, []);
@@ -49,8 +53,12 @@ const App = () => {
   };
 
   const handleDeleteNoteClick = async (id: string) => {
-    await NotesService.deleteNote(id);
-    setNotes(notes => notes.filter(note => note.id !== id));
+    try {
+      await NotesService.deleteNote(id);
+      setNotes(notes => notes.filter(note => note.id !== id));
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
 
   const editModalNote = notes.find(note => note.id === editModalNoteId);

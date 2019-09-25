@@ -30,10 +30,14 @@ const NoteModal = ({ isOpen, onSaveClick, onCancelClick, initialValues }: IProps
 
   const handleSaveClick = async () => {
     setSaveButtonDisabled(true);
-    await onSaveClick({
-      text: textValue,
-      status: published ? NoteStatus.PUBLISHED : NoteStatus.DRAFT
-    });
+    try {
+      await onSaveClick({
+        text: textValue,
+        status: published ? NoteStatus.PUBLISHED : NoteStatus.DRAFT
+      });
+    } catch (error) {
+      console.log('error: ', error);
+    }
     resetState();
   };
 
