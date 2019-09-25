@@ -1,10 +1,10 @@
-import { Note, NotesResponse, NoteResponse, NotePostRequest, NotePatchRequest } from '../types';
+import { NotesResponse, NoteResponse, NotePostRequest, NotePatchRequest } from '../types';
 
 const timeout = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const timeout1s = () => timeout(500);
 
 class NoteService {
-  notes: Note[] = [];
+  notes: NotesResponse = [];
 
   getNotes = async (): Promise<NotesResponse> => {
     await timeout1s();
@@ -23,7 +23,7 @@ class NoteService {
 
   postNote = async (body: NotePostRequest) => {
     await timeout1s();
-    const newNote: Note = {
+    const newNote: NoteResponse = {
       id: Math.round(Math.random() * 100000).toString(),
       createdAt: new Date().toString(),
       updatedAt: new Date().toString(),
@@ -37,7 +37,7 @@ class NoteService {
     await timeout1s();
     const existingNote = this.notes.find(note => note.id === id);
     if (existingNote) {
-      const updatedNote: Note = {
+      const updatedNote: NoteResponse = {
         ...existingNote,
         ...body
       };
